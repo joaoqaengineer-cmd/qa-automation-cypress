@@ -1,0 +1,14 @@
+{
+  "name": "qa-automation-cypress",
+  "version": "1.0.0",
+  "description": "## 📌 Sobre o Projeto Este projeto tem como objetivo demonstrar a aplicação de **boas práticas de automação de testes E2E** utilizando **Cypress**, simulando cenários reais enfrentados por um QA em ambiente profissional.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^15.9.0"
+  }
+}
