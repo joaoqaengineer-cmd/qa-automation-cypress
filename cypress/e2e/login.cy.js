@@ -4,17 +4,32 @@ describe('Login - SauceDemo', () => {
 
   beforeEach(() => {
     LoginPage.visit()
+    cy.fixture('users').as('users')
   })
 
-  it('Deve realizar login com usuário válido', () => {
-    LoginPage.login('standard_user', 'secret_sauce')
+  it('Deve realizar login com usuário válido', function () {
+    LoginPage.login(
+      this.users.valid.username,
+      this.users.valid.password
+    )
 
     cy.url().should('include', '/inventory.html')
     cy.contains('Products').should('be.visible')
   })
 
-  it('Deve exibir erro ao tentar logar sem senha', () => {
-    LoginPage.login('standard_user')
+  it('Deve impedir login de usuário bloqueado', function () {
+    LoginPage.login(
+      this.users.locked.username,
+      this.users.locked.password
+    )
+
+    LoginPage.errorMessage()
+      .should('be.visible')
+      .and('contain', 'Sorry, this user has been locked out')
+  })
+
+  it('Deve exibir erro ao tentar logar sem senha', function () {
+    LoginPage.login(this.users.valid.username)
 
     LoginPage.errorMessage()
       .should('be.visible')
@@ -28,13 +43,4 @@ describe('Login - SauceDemo', () => {
       .should('be.visible')
       .and('contain', 'Username is required')
   })
-
-  it('Deve impedir login de usuário bloqueado', () => {
-    LoginPage.login('locked_out_user', 'secret_sauce')
-
-    LoginPage.errorMessage()
-      .should('be.visible')
-      .and('contain', 'Sorry, this user has been locked out')
-  })
-
 })

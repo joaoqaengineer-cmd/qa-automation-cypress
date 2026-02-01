@@ -5,11 +5,15 @@ class LoginPage {
   }
 
   fillUsername(username) {
-    cy.get('[data-test="username"]').type(username)
+    if (username) {
+      cy.get('[data-test="username"]').clear().type(username)
+    }
   }
 
   fillPassword(password) {
-    cy.get('[data-test="password"]').type(password)
+    if (password) {
+      cy.get('[data-test="password"]').clear().type(password)
+    }
   }
 
   submit() {
@@ -17,15 +21,14 @@ class LoginPage {
   }
 
   login(username, password) {
-    if (username) this.fillUsername(username)
-    if (password) this.fillPassword(password)
+    this.fillUsername(username)
+    this.fillPassword(password)
     this.submit()
   }
 
   errorMessage() {
     return cy.get('[data-test="error"]')
   }
-
 }
 
 export default new LoginPage()
